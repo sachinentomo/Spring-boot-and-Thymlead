@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:insert="linkFile"></div>
+    <title>Index file</title>
+</head>
+<body>
+<div th:insert="navbar"></div>
+<div class="container-fluid">
+    <div class="row my-4">
+        <div th:insert="sidebar"></div>
+        <div class="col-lg-10" id="main_content">
+            <div class="row">
+                <div class="col-lg-10" >
+                    <form class="form-group mb-0">
+                        <input class="form-control " type="Search" placeholder="Search items based on ID and Department name" id="searchbox"
+                               aria-label="Search">
+                    </form>
+                </div>
+
+                <div class="col-lg-2">
+                    <button class="btn btn-primary btn-sm add-department" data-modal="department-modal">Add New Department</button>
+                </div>
+                <div class="col-lg-12 my-4">
+                    <table id="example" class="table table-hover " style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Sl no</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                         <tr th:each="d : ${departmentList}">   
+                                
+                    		<td th:text="${d.departmentId}"></td>
+                    		<td th:text="${d.departmentName}"></td>
+                    		<td th:text="${d.departmentLoc}"></td>
+                    		<td th:text="${d.departmentDesc}"></td>                     
+                       	</tr> 
+                       <!-- <c:forEach var="data" items="${deptList}">
+                            <tr>
+                                <td>${data.dept_id}</td>
+                                <td>${data.dept_name}</td>
+                                <td data-dept_id="${data.dept_id}"
+                                    data-dept_code="${data.dept_code}"
+                                    data-dept_name="${data.dept_name}"
+                                    data-dept_desc="${data.dept_desc}"
+                                    data-dept_loc="${data.dept_loc}"
+                                >
+                                    <button role="button" class="btn btn-link view-department">
+                                        <i class="fas fa-eye text-dark"></i>
+                                    </button>
+
+                                    <button role="button" class="btn btn-link edit-department">
+                                        <i class="fas fa-pencil-alt text-warning"></i>
+                                    </button>
+                                    <button role="button" class="btn btn-link delete-department">
+                                        <i class="fas fa-trash text-danger"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </c:forEach>
+-->
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Sl no</th>
+                            <th>Name</th>
+                            <th>Action</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="department-modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="department-form" th:object="${cmd}">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modal-title">Add New Department</h4>
+                    <button type="button" id="old" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class='error-msg' id='validationSummary'></div>
+                    <div  id="confirm-msg"></div>
+                    <div class="form-group" style="display:none">
+                        <label>lastname</label>
+                        <input type="text" class="form-control" id="employee-lastname" required>
+                    </div>
+
+                    <div class="form-group" id="div1">
+                        <label>Name</label>
+                        <input type="hidden" th:field="*{departmentId}" />
+                        <input type="text" class="form-control" th:field="*{departmentName}" id="department-name" required>
+                    </div>
+
+
+
+                    <div class="form-group" id="div2">
+                        <label>Description</label>
+                        <textarea class="form-control" th:field="*{departmentDesc}" id="department-description" required></textarea>
+                    </div>
+
+                    <div class="form-group" id="div3">
+                        <label>Location</label>
+                        <select th:field="*{departmentLoc}" id="department-location" required class="form-control">
+                            <option value="">Select Location</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Malaysia">Malaysia</option>
+                            <option value="USA">USA</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                    <input type="button" class="btn btn-success" value="Add" id="save">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+    <script th:src="@{/index.js}"></script>
+    <script th:src="@{/department.js}"></script>
+
+
+</body>
+</html>
